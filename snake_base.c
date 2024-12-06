@@ -153,6 +153,12 @@ void logic() {
         fruitX = rand() % (HEIGHT - 2) + 1;
         fruitY = rand() % (WIDTH - 2) + 1;
     }
+    if (fruitX<=0&&fruitX>=HEIGHT||fruitY<=0&&fruitY>=WIDTH)
+    {
+        fruitX = rand() % (HEIGHT - 2) + 1;
+        fruitY = rand() % (WIDTH - 2) + 1;
+    }
+    
 
     //이벤트 발생 판별
     if (score > 50)
