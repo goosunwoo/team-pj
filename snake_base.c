@@ -16,7 +16,7 @@ int fruitX, fruitY;
 int length = 1; // 스네이크의 초기 길이
 int direction; // 현재 방향
 int event = 0;//이벤트 활성화 판별 변수
-int count = 0;//경고 카운트
+int count = 0;//맵 축소 경고 카운트
 
 void setup() {//시작화면
     gameover = 0;
@@ -31,6 +31,7 @@ void setup() {//시작화면
     score = 0;
 }
 //===========================================================
+//주 화면 출력 함수
 void common_size() {
     for (int i = 0; i < HEIGHT; i++) {
         for (int j = 0; j < WIDTH; j++) {
@@ -55,6 +56,7 @@ void common_size() {
         printf("\n");
     }
 }
+//경고용 화면 출력 함수
 void small_size() {
     for (int i = 0; i < SMHEIGHT; i++) {
         for (int j = 0; j < SMWIDTH; j++) {
@@ -79,17 +81,18 @@ void small_size() {
         printf("\n");
     }
 }
+//화면 출력 메인 함수
 void draw() {
     system("cls");
-    if (event == 1)
+    if (event == 1)//이벤트 발생 판별
     {
-        if (count == 30) {
+        if (count == 30) {//맵 사이즈 적용 판별
             WIDTH = SMWIDTH;
             HEIGHT = SMHEIGHT;
             common_size();
         }
         else {
-            if (count % 2 == 0) {
+            if (count % 2 == 0) {//맵 축소 경고
                 small_size();
                 count += 1;
             }
@@ -153,6 +156,7 @@ void logic() {
         fruitX = rand() % (HEIGHT - 2) + 1;
         fruitY = rand() % (WIDTH - 2) + 1;
     }
+    //과일 위치 이탈 수정
     if (fruitX<=0&&fruitX>=HEIGHT||fruitY<=0&&fruitY>=WIDTH)
     {
         fruitX = rand() % (HEIGHT - 2) + 1;
@@ -160,7 +164,7 @@ void logic() {
     }
     
 
-    //이벤트 발생 판별
+    //이벤트 발생 점수 설정
     if (score > 50)
     {
         event = 1;
