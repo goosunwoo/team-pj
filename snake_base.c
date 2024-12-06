@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
 
 #define CMHEIGHT 25
 #define CMWIDTH 25
@@ -29,6 +31,7 @@ void setup() {//시작화면
     fruitY = rand() % (WIDTH - 2) + 1;
 
     score = 0;
+    PlaySound(TEXT("videoplayback.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP | SND_NODEFAULT);
 }
 //===========================================================
 //주 화면 출력 함수
@@ -97,7 +100,7 @@ void draw() {
     system("cls");
     if (event == 1)//이벤트 발생 판별
     {
-        if (count == 30) {//맵 사이즈 적용 판별
+        if (count == 20) {//맵 사이즈 적용 판별
             WIDTH = SMWIDTH;
             HEIGHT = SMHEIGHT;
             common_size();
@@ -105,10 +108,12 @@ void draw() {
         else {
             if (count % 2 == 0) {//맵 축소 경고
                 Warning_size();
+                Beep(1500, 150);
                 count += 1;
             }
             else {
                 common_size();
+                Beep(500, 150);
                 count += 1;
             }
         }
@@ -122,10 +127,12 @@ void draw() {
         else {
             if (count % 2 == 0) {//맵 축소 경고
                 Warning_size();
+                Beep(1500, 150);
                 count -= 1;
             }
             else {
                 common_size();
+                Beep(500, 150);
                 count -= 1;
             }
         }
@@ -177,6 +184,7 @@ void logic() {
     // 과일을 먹으면
     if (snakeX[0] == fruitX && snakeY[0] == fruitY) {
         score += 10;
+        Beep(700, 150);
         length++;
         fruitX = rand() % (HEIGHT - 2) + 1;
         fruitY = rand() % (WIDTH - 2) + 1;
@@ -201,16 +209,34 @@ void logic() {
 
 
     // 속도 조절
-    Sleep(100);
+    Sleep(150);
 }
 //===========================================================
+
+void game_over_music() {
+    int startFreq = 800; // 시작 주파수
+    int decrement = 100; // 감소 폭
+
+    for (int i = 0; i < 5; i++) { // 5번 반복
+        Beep(startFreq, 300); // 현재 주파수의 음
+        startFreq -= decrement; // 주파수 감소
+        Sleep(100); // 짧은 멈춤
+    }
+}
+
 int main() {
     setup();
+
     while (!gameover) {
         draw();
         input();
         logic();
     }
+
+    PlaySound(NULL, NULL, SND_ASYNC);
+    game_over_music();
+   
+
     printf("게임종료! 최종 스코어: %d\n", score);
     return 0;
 }
