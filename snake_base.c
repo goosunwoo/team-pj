@@ -57,10 +57,20 @@ void common_size() {
     }
 }
 //경고용 화면 출력 함수
-void small_size() {
-    for (int i = 0; i < SMHEIGHT; i++) {
-        for (int j = 0; j < SMWIDTH; j++) {
-            if (i == 0 || i == SMHEIGHT - 1 || j == 0 || j == SMWIDTH - 1) {
+void Warning_size() {
+    int Ws_HEIGHT, Ws_WIDTH;
+    if (event==1)
+    {
+        Ws_WIDTH = SMWIDTH;
+        Ws_HEIGHT = SMHEIGHT;
+    }else{
+        Ws_WIDTH = CMWIDTH;
+        Ws_HEIGHT = CMHEIGHT;
+    }
+    
+    for (int i = 0; i < Ws_HEIGHT; i++) {
+        for (int j = 0; j < Ws_WIDTH; j++) {
+            if (i == 0 || i == Ws_HEIGHT - 1 || j == 0 || j == Ws_WIDTH - 1) {
                 printf("#");
             }
             else if (i == fruitX && j == fruitY) {
@@ -93,7 +103,7 @@ void draw() {
         }
         else {
             if (count % 2 == 0) {//맵 축소 경고
-                small_size();
+                Warning_size();
                 count += 1;
             }
             else {
@@ -103,7 +113,21 @@ void draw() {
         }
     }
     else {
-        common_size();
+        if (count == 0) {//맵 사이즈 적용 판별
+            WIDTH = CMWIDTH;
+            HEIGHT = CMHEIGHT;
+            common_size();
+        }
+        else {
+            if (count % 2 == 0) {//맵 축소 경고
+                Warning_size();
+                count -= 1;
+            }
+            else {
+                common_size();
+                count -= 1;
+            }
+        }
     }
 
     printf("Score: %d\n", score);
@@ -156,6 +180,7 @@ void logic() {
         fruitX = rand() % (HEIGHT - 2) + 1;
         fruitY = rand() % (WIDTH - 2) + 1;
     }
+
     //과일 위치 이탈 수정
     if (fruitX<=0&&fruitX>=HEIGHT||fruitY<=0&&fruitY>=WIDTH)
     {
@@ -164,11 +189,13 @@ void logic() {
     }
     
 
-    //이벤트 발생 점수 설정
-    if (score > 50)
-    {
+    //이벤트 실행 점수 설정
+    if (score = 50){
         event = 1;
+    }else if (score=150){
+        event = 0;
     }
+    
 
 
     // 속도 조절
