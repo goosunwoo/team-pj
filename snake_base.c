@@ -59,15 +59,16 @@ void common_size() {
 //경고용 화면 출력 함수
 void Warning_size() {
     int Ws_HEIGHT, Ws_WIDTH;
-    if (event==1)
+    if (event == 1)
     {
         Ws_WIDTH = SMWIDTH;
         Ws_HEIGHT = SMHEIGHT;
-    }else{
+    }
+    else {
         Ws_WIDTH = CMWIDTH;
         Ws_HEIGHT = CMHEIGHT;
     }
-    
+
     for (int i = 0; i < Ws_HEIGHT; i++) {
         for (int j = 0; j < Ws_WIDTH; j++) {
             if (i == 0 || i == Ws_HEIGHT - 1 || j == 0 || j == Ws_WIDTH - 1) {
@@ -182,20 +183,21 @@ void logic() {
     }
 
     //과일 위치 이탈 수정
-    if (fruitX<=0&&fruitX>=HEIGHT||fruitY<=0&&fruitY>=WIDTH)
+    if (fruitX <= 0 || fruitX >= HEIGHT || fruitY <= 0 || fruitY >= WIDTH)
     {
         fruitX = rand() % (HEIGHT - 2) + 1;
         fruitY = rand() % (WIDTH - 2) + 1;
     }
-    
+
 
     //이벤트 실행 점수 설정
-    if (score = 50){
-        event = 1;
-    }else if (score=150){
+    if (score % 100 == 0 && score != 0) {
         event = 0;
     }
-    
+    else if (score % 50 == 0 && score != 0) {
+        event = 1;
+    }
+
 
 
     // 속도 조절
