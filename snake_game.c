@@ -25,7 +25,7 @@ typedef struct {
 	int isAlive;
 } Player_2p;
 
-//1p=============================================================================
+//game mode 1=================================================================
 int HEIGHT = CMHEIGHT, WIDTH = CMWIDTH;
 int gameover, score;
 int snakeX[MAX_LENGTH], snakeY[MAX_LENGTH]; // 스네이크의 몸통 좌표
@@ -46,7 +46,7 @@ void setup() {//시작화면
 	fruitY = rand() % (WIDTH - 2) + 1;
 
 	score = 0;
-	
+
 }
 
 //주 화면 출력 함수
@@ -237,7 +237,7 @@ void game_over_music() {
 		Sleep(100); // 짧은 멈춤
 	}
 }
-
+//game mode 1 실행 함수=======================================================
 void game_mode1() {
 	setup();
 
@@ -254,7 +254,7 @@ void game_mode1() {
 	printf("게임종료! 최종 스코어: %d\n", score);
 	return 0;
 }
-//2p==========================================================================
+//game mode 2=================================================================
 Player_2p p1, p2;
 int gameover_2p;
 
@@ -281,7 +281,7 @@ void setup_2p() {
 	p2.direction = 0;
 	p2.isAlive = 1;
 
-	
+
 }
 
 void draw_2p() {
@@ -408,7 +408,7 @@ void logic_2p() {
 
 	Sleep(100);
 }
-
+//game mode 2 실행 함수==============================================
 void game_mode2() {
 	setup_2p();
 
@@ -450,7 +450,7 @@ re:
 	if (choice == 1) {
 		game_mode1();
 	}
-	else if(choice == 2) {
+	else if (choice == 2) {
 		game_mode2();
 	}
 	else if (choice == 3) {
@@ -458,6 +458,7 @@ re:
 	}
 	else {
 		printf("잘못 입력하셨습니다. 다시 입력해주세요.\n");
+		system("cls");
 		goto re;
 	}
 	game_over_music();
